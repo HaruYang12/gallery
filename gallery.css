@@ -1,0 +1,97 @@
+/* --- Gallery 頁面樣式 --- */
+
+.gallery-container {
+    padding: 150px 5% 80px; /* 預留上方 Navbar 的空間 */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.gallery-header {
+    margin-bottom: 60px;
+    text-align: left;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.page-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* --- 網格佈局 (CSS Grid) --- */
+.gallery-grid {
+    display: grid;
+    /* 電腦版：三欄佈局 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px; /* 照片之間的間距 */
+}
+
+.gallery-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+/* 讓照片項目依序淡入 (Staggered Animation) */
+.gallery-item:nth-child(1) { animation-delay: 0.2s; }
+.gallery-item:nth-child(2) { animation-delay: 0.4s; }
+.gallery-item:nth-child(3) { animation-delay: 0.6s; }
+.gallery-item:nth-child(4) { animation-delay: 0.8s; }
+
+.image-box {
+    width: 100%;
+    /* 強制維持 4:3 比例 */
+    aspect-ratio: 4 / 3; 
+    overflow: hidden;
+    background-color: #E6E1D8; /* 載入前的底色 */
+    border: 1px solid rgba(74, 63, 53, 0.1); /* 極細褐色邊框 */
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 確保照片填滿 4:3 容器不變形 */
+    transition: transform 0.6s ease;
+}
+
+/* 懸停效果：照片輕微放大 */
+.gallery-item:hover .image-box img {
+    transform: scale(1.05);
+}
+
+.item-info {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    letter-spacing: 1px;
+}
+
+/* --- Gallery RWD 響應式調整 --- */
+
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 平板版：兩欄 */
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* 手機版：一欄 */
+        gap: 40px;
+    }
+    
+    .page-title {
+        font-size: 2.2rem;
+    }
+}
