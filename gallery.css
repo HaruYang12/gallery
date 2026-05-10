@@ -76,6 +76,35 @@
     letter-spacing: 1px;
 }
 
+/* 按鈕容器置中 */
+.load-more-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* 極簡風格按鈕 */
+.load-more-btn {
+    background: transparent;
+    border: 1px solid var(--text-primary);
+    color: var(--text-primary);
+    padding: 12px 30px;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    background-color: var(--text-primary);
+    color: var(--bg-color); /* 懸停時反白 */
+}
+
+/* 讓新載入的照片也有淡入動畫 */
+.gallery-grid .gallery-item {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
 /* --- Gallery RWD 響應式調整 --- */
 
 @media (max-width: 1024px) {

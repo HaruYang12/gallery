@@ -89,43 +89,104 @@ const photoData = [
     }
 ];
 
+const INITIAL_SHOW = 3; // 初始顯示張數
+
 // 2. 取得 HTML 容器
-const galleryRoot = document.getElementById('gallery-root');
+// const galleryRoot = document.getElementById('gallery-root');
 
 // 3. 生成內容的函數
+// function renderGallery() {
+//     let htmlContent = '';
+
+//     photoData.forEach(section => {
+//         // 建立年份標題區塊
+//         htmlContent += `
+//             <div class="year-section">
+//                 <h2 class="year-title">${section.year}</h2>
+//                 <div class="gallery-grid">
+//         `;
+
+//         // 建立該年份的照片網格
+//         section.photos.forEach(photo => {
+//             htmlContent += `
+//                 <div class="gallery-item">
+//                     <div class="image-box">
+//                         <img src="${photo.src}" alt="${photo.title}" loading="lazy">
+//                     </div>
+//                     <div class="item-info">
+//                         <strong>${photo.title}</strong>
+//                         <p>${photo.desc}</p>
+//                     </div>
+//                 </div>
+//             `;
+//         });
+
+//         htmlContent += `
+//                 </div>
+//             </div>
+//         `;
+//     });
+
+//     galleryRoot.innerHTML = htmlContent;
+// }
+
 function renderGallery() {
-    let htmlContent = '';
+    const galleryRoot = document.getElementById('gallery-root');
+    galleryRoot.innerHTML = ''; // 清空內容
 
-    photoData.forEach(section => {
-        // 建立年份標題區塊
-        htmlContent += `
-            <div class="year-section">
-                <h2 class="year-title">${section.year}</h2>
-                <div class="gallery-grid">
+    photoData.forEach((section, index) => {
+        const yearSection = document.createElement('div');
+        yearSection.className = 'year-section';
+        yearSection.id = `section-${section.year}`;
+
+        // 插入標題與空網格
+        yearSection.innerHTML = `
+            <h2 class="year-title">${section.year}</h2>
+            <div class="gallery-grid" id="grid-${section.year}"></div>
+            <div class="load-more-container" id="btn-container-${section.year}"></div>
         `;
+        
+        galleryRoot.appendChild(yearSection);
 
-        // 建立該年份的照片網格
-        section.photos.forEach(photo => {
-            htmlContent += `
-                <div class="gallery-item">
-                    <div class="image-box">
-                        <img src="${photo.src}" alt="${photo.title}" loading="lazy">
-                    </div>
-                    <div class="item-info">
-                        <strong>${photo.title}</strong>
-                        <p>${photo.desc}</p>
-                    </div>
-                </div>
-            `;
-        });
+        // 初始載入
+        loadPhotos(section.year, 0, INITIAL_SHOW);
+    });
+}
 
-        htmlContent += `
-                </div>
+function loadPhotos(year, startIndex, count) {
+    const section = photoData.find(s => s.year === year);
+    const grid = document.getElementById(`grid-${year}`);
+    const btnContainer = document.getElementById(`btn-container-${year}`);
+    
+    // 取得要顯示的照片片段
+    const photosToDisplay = section.photos.slice(startIndex, startIndex + count);
+    
+    photosToDisplay.forEach(photo => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.innerHTML = `
+            <div class="image-box">
+                <img src="${photo.src}" alt="${photo.title}" loading="lazy">
+            </div>
+            <div class="item-info">
+                <strong>${photo.title}</strong>
+                <p>${photo.desc}</p>
             </div>
         `;
+        grid.appendChild(item);
     });
 
-    galleryRoot.innerHTML = htmlContent;
+    // 判斷是否還有更多照片
+    const currentTotal = grid.querySelectorAll('.gallery-item').length;
+    if (currentTotal < section.photos.length) {
+        btnContainer.innerHTML = `
+            <button class="load-more-btn" onclick="loadPhotos('${year}', ${currentTotal}, ${count})">
+                LOAD MORE
+            </button>
+        `;
+    } else {
+        btnContainer.innerHTML = ''; // 沒有照片了就移除按鈕
+    }
 }
 
 // 執行渲染
