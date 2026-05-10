@@ -89,57 +89,25 @@ const photoData = [
     }
 ];
 
-const INITIAL_SHOW = 3; // 初始顯示張數
+const INITIAL_SHOW = 3; 
 
-// 2. 取得 HTML 容器
-// const galleryRoot = document.getElementById('gallery-root');
+// --- A. 燈箱相關的變數 (放在最上方，方便 JS 抓取 HTML 元素) ---
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
 
-// 3. 生成內容的函數
-// function renderGallery() {
-//     let htmlContent = '';
-
-//     photoData.forEach(section => {
-//         // 建立年份標題區塊
-//         htmlContent += `
-//             <div class="year-section">
-//                 <h2 class="year-title">${section.year}</h2>
-//                 <div class="gallery-grid">
-//         `;
-
-//         // 建立該年份的照片網格
-//         section.photos.forEach(photo => {
-//             htmlContent += `
-//                 <div class="gallery-item">
-//                     <div class="image-box">
-//                         <img src="${photo.src}" alt="${photo.title}" loading="lazy">
-//                     </div>
-//                     <div class="item-info">
-//                         <strong>${photo.title}</strong>
-//                         <p>${photo.desc}</p>
-//                     </div>
-//                 </div>
-//             `;
-//         });
-
-//         htmlContent += `
-//                 </div>
-//             </div>
-//         `;
-//     });
-
-//     galleryRoot.innerHTML = htmlContent;
-// }
-
+// 2. 渲染主函數
 function renderGallery() {
     const galleryRoot = document.getElementById('gallery-root');
-    galleryRoot.innerHTML = ''; // 清空內容
+    if (!galleryRoot) return;
 
-    photoData.forEach((section, index) => {
+    galleryRoot.innerHTML = ''; 
+
+    photoData.forEach((section) => {
         const yearSection = document.createElement('div');
         yearSection.className = 'year-section';
         yearSection.id = `section-${section.year}`;
 
-        // 插入標題與空網格
         yearSection.innerHTML = `
             <h2 class="year-title">${section.year}</h2>
             <div class="gallery-grid" id="grid-${section.year}"></div>
@@ -147,25 +115,25 @@ function renderGallery() {
         `;
         
         galleryRoot.appendChild(yearSection);
-
-        // 初始載入
         loadPhotos(section.year, 0, INITIAL_SHOW);
     });
 }
 
+// 3. 載入照片函數
 function loadPhotos(year, startIndex, count) {
     const section = photoData.find(s => s.year === year);
     const grid = document.getElementById(`grid-${year}`);
     const btnContainer = document.getElementById(`btn-container-${year}`);
     
-    // 取得要顯示的照片片段
     const photosToDisplay = section.photos.slice(startIndex, startIndex + count);
     
     photosToDisplay.forEach(photo => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
+        
+        // --- B. 關鍵位置：在這裡的 HTML 標籤加入 onclick 點擊事件 ---
         item.innerHTML = `
-            <div class="image-box">
+            <div class="image-box" onclick="openLightbox('${photo.src}', '${photo.title}')">
                 <img src="${photo.src}" alt="${photo.title}" loading="lazy">
             </div>
             <div class="item-info">
@@ -176,7 +144,6 @@ function loadPhotos(year, startIndex, count) {
         grid.appendChild(item);
     });
 
-    // 判斷是否還有更多照片
     const currentTotal = grid.querySelectorAll('.gallery-item').length;
     if (currentTotal < section.photos.length) {
         btnContainer.innerHTML = `
@@ -185,9 +152,29 @@ function loadPhotos(year, startIndex, count) {
             </button>
         `;
     } else {
-        btnContainer.innerHTML = ''; // 沒有照片了就移除按鈕
+        btnContainer.innerHTML = ''; 
     }
 }
 
-// 執行渲染
+// --- C. 燈箱功能函數 (放在底部，處理打開與關閉) ---
+
+function openLightbox(src, title) {
+    lightboxImg.src = src;
+    lightboxCaption.innerText = title;
+    lightbox.style.display = 'flex'; // 顯示燈箱
+    document.body.style.overflow = 'hidden'; // 禁止底層捲動
+}
+
+// 點擊燈箱背景或關閉按鈕時執行
+if (lightbox) {
+    lightbox.onclick = function(e) {
+        // 如果點擊的地方「不是」圖片本身，就關閉燈箱
+        if (e.target !== lightboxImg) {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto'; // 恢復捲動
+        }
+    };
+}
+
+// 最後執行初始化渲染
 renderGallery();
