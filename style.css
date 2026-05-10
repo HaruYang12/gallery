@@ -1,0 +1,111 @@
+/* --- 1. 定義變數 --- */
+:root {
+    --bg-color: #F2EDE4;
+    --text-primary: #4A3F35;
+    --text-secondary: #70665C;
+    --accent-color: #C7B198;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Montserrat', sans-serif;
+}
+
+/* --- 2. 基礎重設 --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden; /* 防止手機版左右晃動 */
+}
+
+/* --- 3. 導覽列佈局 --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5%;
+    z-index: 100; /* 確保在圖片之上 */
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+}
+
+.navbar li {
+    margin-left: 2rem;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.navbar a.active, .navbar a:hover {
+    color: var(--accent-color);
+}
+
+/* --- 4. 首頁 Hero 區塊 (關鍵 RWD 處理) --- */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 佔滿全螢幕高度 */
+    display: flex;
+    align-items: flex-end; /* 電腦版文字靠下 */
+    padding: 5%;
+}
+
+.hero-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 關鍵：確保圖片在不同螢幕下都能填滿且不變形 */
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 8vw, 6rem); /* 響應式字體：最小2.5rem，隨螢幕縮放，最大6rem */
+    line-height: 0.9;
+    font-weight: 400;
+}
+
+/* --- 5. 手機版微調 (RWD) --- */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+    
+    .navbar li {
+        margin: 0.5rem 1rem;
+    }
+
+    .hero-title {
+        margin-bottom: 2rem; /* 在手機上留出一點底部空間 */
+    }
+}
