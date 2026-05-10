@@ -45,8 +45,9 @@ body {
     backdrop-filter: blur(1px); /* 模糊背景 */
     -webkit-backdrop-filter: blur(10px); /* 支援 Safari */
     
-    /* 可選：加上淡淡的底線增加邊界感 */
-    /* border-bottom: 1px solid rgba(74, 63, 53, 0.1);  */
+    opacity: 0;
+    /* 導覽列最後才出現，增加一點輕盈感 */
+    animation: fadeIn 1s ease-in 1.2s forwards;
 }
 
 .logo {
@@ -104,6 +105,12 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover; /* 關鍵：確保圖片在不同螢幕下都能填滿且不變形 */
+
+    /* 1. 時間縮短（從 2.5s 改為 1.8s）
+       2. 使用 cubic-bezier 曲線：
+          這條曲線 (0.22, 1, 0.36, 1) 會讓動畫開始時非常快，然後迅速減速，
+          讓模糊在瞬間消失 */
+    animation: imageScale 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-title {
@@ -111,6 +118,10 @@ body {
     font-size: clamp(2.5rem, 8vw, 6rem); /* 響應式字體：最小2.5rem，隨螢幕縮放，最大6rem */
     line-height: 0.9;
     font-weight: 400;
+
+    /* 套用文字動畫：持續 1.2 秒，延遲 0.6 秒再開始（等圖片先動） */
+    opacity: 0; /* 初始隱藏 */
+    animation: fadeInUp 1.2s ease-out 0.6s forwards;
 }
 
 /* --- 5. 手機版微調 (RWD) --- */
@@ -127,4 +138,41 @@ body {
     .hero-title {
         margin-bottom: 2rem; /* 在手機上留出一點底部空間 */
     }
+}
+
+/* --- Home page 動畫關鍵影格 --- */
+
+/* 背景圖縮放效果 */
+@keyframes imageScale {
+    0% {
+        transform: scale(1.05); /* 初始縮放比例降低（從1.1改為1.05），讓移動感更細膩 */
+        filter: blur(3px);      /* 初始模糊度降低（從5px改為3px），減少沉重感 */
+    }
+    
+    /* 關鍵優化：在動畫進行到 40% 時，就讓模糊完全消失 */
+    40% {
+        filter: blur(0);
+    }
+    
+    100% {
+        transform: scale(1);   /* 縮放效果持續進行到最後 */
+        filter: blur(0);
+    }
+}
+
+/* 文字淡入並上移 (維持原樣) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* 上移距離稍微縮減，看起來更俐落 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* 導覽列淡入 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
