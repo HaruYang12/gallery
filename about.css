@@ -1,0 +1,47 @@
+.about-simple-container {
+    padding: 160px 5% 100px; /* 給予頂部足夠的呼吸空間 */
+    max-width: 800px; /* 縮窄寬度，讓閱讀更集中 */
+    margin: 0 auto;
+}
+
+.about-hero {
+    width: 100%;
+    margin-bottom: 60px;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.about-hero-img {
+    width: 100%;
+    height: auto;
+    filter: sepia(10%) contrast(95%); /* 輕微濾鏡效果讓照片更柔和 */
+}
+
+.about-bio {
+    animation: fadeInUp 1.2s ease-out forwards;
+}
+
+.greeting-title {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+}
+
+.bio-text {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 2; /* 較寬的行距，讀起來很舒服 */
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+/* 手機版微調 */
+@media (max-width: 600px) {
+    .about-simple-container {
+        padding-top: 100px;
+    }
+    .greeting-title {
+        font-size: 1.8rem;
+    }
+}
