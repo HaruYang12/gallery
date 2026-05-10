@@ -3,9 +3,9 @@ const photoData = [
     {
         year: "2026",
         photos: [
-            { src: "/assets/images/DSCF2797.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
-            { src: "/assets/images/DSCF2816.jpg", title: "Ginzan Onsen", desc: "Yamagata"},
-            { src: "/assets/images/DSCF2818.jpg", title: "Ginzan Onsen", desc: "Yamagata"},
+            { src: "assets/images/DSCF2797.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
+            { src: "assets/images/DSCF2816.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
+            { src: "assets/images/DSCF2818.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
             { src: "/assets/images/DSCF2826.jpg", title: "Ginzan Onsen", desc: "Yamagata"},
             { src: "/assets/images/DSCF2840.jpg", title: "Ginzan Onsen", desc: "Yamagata"},
             { src: "/assets/images/DSCF2899.jpg", title: "Zao", desc: "Yamagata"},
