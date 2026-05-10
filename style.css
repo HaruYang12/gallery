@@ -31,14 +31,25 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 5%;
-    z-index: 100; /* 確保在圖片之上 */
+    padding: 1.5rem 5%;
+    z-index: 100;
+    
+    /* 核心修改：半透明米色底 + 毛玻璃模糊 */
+    background-color: rgba(242, 237, 228, 0.02); /* 使用我們定義的米色，0.7 是透明度 */
+    backdrop-filter: blur(1px); /* 模糊背景 */
+    -webkit-backdrop-filter: blur(10px); /* 支援 Safari */
+    
+    /* 可選：加上淡淡的底線增加邊界感 */
+    /* border-bottom: 1px solid rgba(74, 63, 53, 0.1);  */
 }
 
 .logo {
     font-family: var(--font-serif);
     font-size: 1.2rem;
     letter-spacing: 2px;
+    /* 將 logo 顏色加深 */
+    color: #2A1F16; 
+    font-weight: 600; /* 稍微加粗可以提升閱讀性 */
 }
 
 .navbar ul {
@@ -50,12 +61,14 @@ body {
     margin-left: 2rem;
 }
 
-.navbar a {
+ .navbar a {
     text-decoration: none;
-    color: var(--text-primary);
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    transition: 0.3s;
+    /* 這裡原本可能是 var(--text-primary)，我們直接改用更深的顏色 */
+    color: #2A1F16; 
+    font-size: 0.85rem; /* 稍微放大 0.05rem 也有助於閱讀 */
+    font-weight: 500;   /* 增加一點字重 */
+    letter-spacing: 1.5px;
+    transition: 0.3s ease;
 }
 
 .navbar a.active, .navbar a:hover {
