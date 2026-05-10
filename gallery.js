@@ -3,7 +3,7 @@ const photoData = [
     {
         year: "2026",
         photos: [
-            { src: "assets/images/DSCF2797.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
+            { src: "assets/images/DSCF2797.jpg", title: "Ginzan Onsen", desc: "Yamagata"},
             { src: "assets/images/DSCF2816.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
             { src: "assets/images/DSCF2818.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
             { src: "assets/images/DSCF2826.JPG", title: "Ginzan Onsen", desc: "Yamagata"},
